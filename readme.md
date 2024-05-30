@@ -1,6 +1,12 @@
 run
 
 ```sh
+aws configure
+openshift-install create install-config --dir ./openshift-install
+openshift-install create cluster --dir ./openshift-install
+```
+
+```sh
 export gitops_repo=https://github.com/trevorbox/acm-virt-dr.git #<your newly created repo>
 export cluster_name=hub #<your hub cluster name, typically "hub">
 export cluster_base_domain=$(oc get ingress.config.openshift.io cluster --template={{.spec.domain}} | sed -e "s/^apps.//")
@@ -13,6 +19,9 @@ envsubst < .bootstrap/argocd.yaml | oc apply -f -
 sleep 30
 envsubst < .bootstrap/root-application.yaml | oc apply -f -
 ```
+
+> Note: needed to `oc delete certmanager cluster` to fix race condition
+
 To get the prod and non-prod cluster created you'll have to prepare a secret in the way ACM expects it, then run:
 
 ```sh

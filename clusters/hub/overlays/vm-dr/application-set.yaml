@@ -22,7 +22,7 @@ spec:
       project: default
       sources:
         - path: components/vm
-          repoURL: https://github.com/raffaelespazzoli/acm-virt-dr
+          repoURL: https://github.com/trevorbox/acm-virt-dr
       syncPolicy:
         automated:
           prune: true
