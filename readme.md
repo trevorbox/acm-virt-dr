@@ -27,6 +27,15 @@ To get the prod and non-prod cluster created you'll have to prepare a secret in 
 ```sh
 oc new-project open-cluster-management
 oc delete secret aws-credentials -n open-cluster-management
+# cat ~/.aws/credentials
+export AWS_KEY=
+export AWS_SECRET=
+export SSH_PRIV_KEY= #$(cat ~/.ssh/id_aws.pub)
+oc create secret generic aws-credentials \
+  --from-literal=ssh-privatekey="${SSH_PRIV_KEY}" \
+  --from-literal=aws_access_key_id="${AWS_KEY}" \
+  --from-literal=aws_secret_access_key="${AWS_SECRET}" \
+  -n open-cluster-management
 oc apply -f ./.rosa/aws-secret.yaml
 ```
 
